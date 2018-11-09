@@ -76,12 +76,31 @@ window.addEventListener('keydown', functionKeys);
 
 // bonus touch event section!
 
-// Dectect user touch on screen
-window.addEventListener('touchstart', function() {
-});
+function touchStart(e){
+	e.preventDefault(); // stop scroll on touch section
+	var  = e.target; // set variable target touch
+	var touchinit = e.touches[0]; // array value at 0 you can tap at position 0 (first touch)
+	touchX=touchinit.pageX-touch.target.clientX;
+	touchY=touchinit.pageY-touch.target.clientY;
+}
 
-// Add touch event listeners to canvas element
-			freshCanvas.addEventListener("touchstart", pencilStart, false);
-			freshCanvas.addEventListener("touchmove", pencilDown, false);
-			freshCanvas.addEventListener("touchend", pencilUp, false);
-			// freshCanvas.addEventListener("touchcancel", cancel, false);
+// function init() {
+//   // Get a reference to our touch-sensitive element
+//   var touchstart = document.getElementById("touchzone");
+//   // Add an event handler for the touchstart event
+//   touchzone.addEventListener("touchstart", touchHandler, false);
+// }
+
+
+// Detect user touch on screen & only first touch
+window.addEventListener('touchstart', function pencilStart() {
+});
+window.removeEventListener('touchstart', touchStart, false);
+
+
+
+// // Add touch event listeners to canvas element
+// 			freshCanvas.addEventListener("touchstart", pencilStart, false);
+// 			freshCanvas.addEventListener("touchmove", pencilDown, false);
+// 			freshCanvas.addEventListener("touchend", pencilUp, false);
+// 			// freshCanvas.addEventListener("touchcancel", cancel, false);
