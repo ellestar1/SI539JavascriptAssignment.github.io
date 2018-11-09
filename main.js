@@ -80,7 +80,7 @@ window.addEventListener('keydown', functionKeys);
 // bonus touch event section!
 
 function touchStart(e){
-	e.preventDefault(); // stop scroll on touch section
+	// e.preventDefault(); // stop scroll on touch section
 	var touchinit = e.target; // set variable target touch
 	var touchnew = e.touches[0]; // array value at 0 you can tap at position 0 (first touch)
 	touchX=touchinit.pageX-touch.target.clientX;
