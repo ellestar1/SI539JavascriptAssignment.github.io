@@ -76,6 +76,10 @@ window.addEventListener('keydown', functionKeys);
 
 // bonus touch event section!
 
+// Dectect user touch on screen
+window.addEventListener('touchstart', function() {
+});
+
 // Add touch event listeners to canvas element
 			freshCanvas.addEventListener("touchstart", pencilStart, false);
 			freshCanvas.addEventListener("touchmove", pencilDown, false);
