@@ -1,4 +1,7 @@
 /* create base variables for the Canvas implementation*/
+// Additional credit goes to Emily, for sending me the useful tutorial on YouTube, 
+// Vaidehi and Lauren with whom we banged heads together at different times to come up with solutions
+// And of course, Colleen and Kangning who reminded me not to panic.
 
 var freshCanvas = document.getElementById('freshCanvas');
 var context = freshCanvas.getContext('2d');
@@ -78,8 +81,8 @@ window.addEventListener('keydown', functionKeys);
 
 function touchStart(e){
 	e.preventDefault(); // stop scroll on touch section
-	var  = e.target; // set variable target touch
-	var touchinit = e.touches[0]; // array value at 0 you can tap at position 0 (first touch)
+	var touchinit = e.target; // set variable target touch
+	var touchnew = e.touches[0]; // array value at 0 you can tap at position 0 (first touch)
 	touchX=touchinit.pageX-touch.target.clientX;
 	touchY=touchinit.pageY-touch.target.clientY;
 }
@@ -93,14 +96,11 @@ function touchStart(e){
 
 
 // Detect user touch on screen & only first touch
-window.addEventListener('touchstart', function pencilStart() {
-});
+window.addEventListener('touchstart', function touchStart();
 window.removeEventListener('touchstart', touchStart, false);
 
-
-
-// // Add touch event listeners to canvas element
-// 			freshCanvas.addEventListener("touchstart", pencilStart, false);
-// 			freshCanvas.addEventListener("touchmove", pencilDown, false);
-// 			freshCanvas.addEventListener("touchend", pencilUp, false);
-// 			// freshCanvas.addEventListener("touchcancel", cancel, false);
+// Add touch event listeners to canvas element
+			freshCanvas.addEventListener("touchstart", pencilStart, false);
+			freshCanvas.addEventListener("touchmove", pencilDown, false);
+			freshCanvas.addEventListener("touchend", pencilUp, false);
+			// freshCanvas.addEventListener("touchcancel", cancel, false);
