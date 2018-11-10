@@ -88,7 +88,7 @@ var touchPosition = { x:0, y:0 };
 freshCanvas.addEventListener("touchstart", function (e) {
 				touchPosition = getTouchPosition(freshCanvas, e);
 				var touch = e.touches[0];
-				var touchEvent = new touchEvent("mousedown", {
+				var mouseEvent = new MouseEvent("mousedown", {
 					clientX: touch.clientX,
 					clientY: touch.clientY
 				});
