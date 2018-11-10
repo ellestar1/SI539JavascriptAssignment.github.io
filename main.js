@@ -48,9 +48,9 @@ var pencilUp = function(){
 // 			};
 
 //actions for the mouse, specifically mouse-related
-freshCanvas.addEventListener('mousedown', pencilStart);
-freshCanvas.addEventListener('mousemove', pencilDown);
-freshCanvas.addEventListener('mouseup', pencilUp);
+	freshCanvas.addEventListener('mousedown', pencilStart);
+	freshCanvas.addEventListener('mousemove', pencilDown);
+	freshCanvas.addEventListener('mouseup', pencilUp);
 
 
 //set variable for each key number (b, g, r, y) that will represent an eventual color choice, etc.
@@ -79,28 +79,18 @@ window.addEventListener('keydown', functionKeys);
 
 // bonus touch event section!
 
-function touchStart(e){
-	// e.preventDefault(); // stop scroll on touch section
-	var touchinit = e.target; // set variable target touch
-	var touchnew = e.touches[0]; // array value at 0 you can tap at position 0 (first touch)
-	touchX=touchinit.pageX-touch.target.clientX;
-	touchY=touchinit.pageY-touch.target.clientY;
-}
+function context(x,y)
 
-// function init() {
-//   // Get a reference to our touch-sensitive element
-//   var touchstart = document.getElementById("touchzone");
-//   // Add an event handler for the touchstart event
-//   touchzone.addEventListener("touchstart", touchHandler, false);
-// }
+freshCanvas.addEventListener('touchmove', function(e) {
+  context(e.touches[0].pageX-e.target.offsetLeft, e.touches[0].pageY-e.target.offsetTop);
+});
 
+freshCanvas.addEventListener('touchstart', function(e) {
+  context(e.touches[0].pageX-e.target.offsetLeft, e.touches[0].pageY-e.target.offsetTop);
+});
 
-// Detect user touch on screen & only first touch
-window.addEventListener('touchstart', function touchStart();
-window.removeEventListener('touchstart', touchStart, false);
-
-// Add touch event listeners to canvas element
-			freshCanvas.addEventListener("touchstart", pencilStart, false);
-			freshCanvas.addEventListener("touchmove", pencilDown, false);
-			freshCanvas.addEventListener("touchend", pencilUp, false);
-			// freshCanvas.addEventListener("touchcancel", cancel, false);
+// Add touch event actions to canvas element
+	freshCanvas.addEventListener("touchstart", pencilStart, false);
+	freshCanvas.addEventListener("touchmove", pencilDown, false);
+	freshCanvas.addEventListener("touchend", pencilUp, false);
+	// freshCanvas.addEventListener("touchcancel", cancel, false);
