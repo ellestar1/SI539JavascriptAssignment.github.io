@@ -88,7 +88,7 @@ freshCanvas.addEventListener('touchstart', function(e) {
 });
 
 // Add touch event actions to canvas element
-	freshCanvas.addEventListener("touchstart", pencilStart, false);
-	freshCanvas.addEventListener("touchmove", pencilDown, false);
-	freshCanvas.addEventListener("touchend", pencilUp, false);
+	// freshCanvas.addEventListener("touchstart", pencilStart, false);
+	// freshCanvas.addEventListener("touchmove", pencilDown, false);
+	// freshCanvas.addEventListener("touchend", pencilUp, false);
 	// freshCanvas.addEventListener("touchcancel", cancel, false);
