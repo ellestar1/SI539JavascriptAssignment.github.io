@@ -112,6 +112,20 @@ var isMoved = false;
 //    drawPath.push(touches[0]);  
 // }
 
+function drawPathSetting(idx) 
+{
+   for (var i = 0; i < drawPath.length; i++) 
+   {
+      var _idx = drawPath[i].identifier;
+      if (_idx === idx) 
+      {
+         return i;
+      }
+   }
+
+   return -1;
+} 
+
 function touchDraw(e) 
 {
    isMoved = true;
@@ -160,20 +174,6 @@ function touchEnd()
    drawPath.length = 0; /* Initialize the stored coordinates */ 
 }
 
-
-function drawPathSetting(idx) 
-{
-   for (var i = 0; i < drawPath.length; i++) 
-   {
-      var _idx = drawPath[i].identifier;
-      if (_idx === idx) 
-      {
-         return i;
-      }
-   }
-
-   return -1;
-} 
 // Add touch event actions to canvas element
 	freshCanvas.addEventListener("touchstart", touchStart, false);
 	freshCanvas.addEventListener("touchmove", touchDraw, false);
