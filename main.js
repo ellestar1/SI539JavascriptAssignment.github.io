@@ -106,14 +106,14 @@ var drawPath = new Array();
 /* Flag for displaying the touching point */
 var isMoved = false;
     
-function touchStartHandler(e) 
+function touchUp(e) 
 {
    /* Store the current touch information (coordinates) */
    touches = e.changedTouches;
    drawPath.push(touches[0]);  
 }
 
-function touchMoveHandler(e) 
+function touchDown(e) 
 {
    isMoved = true;
    touches = e.changedTouches;
