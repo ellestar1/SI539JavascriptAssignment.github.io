@@ -93,20 +93,20 @@ freshCanvas.addEventListener("touchstart", function (e) {
 					clientY: touch.clientY
 				});
 
-freshCanvas.dispatchEvent(touchEvent);
+freshCanvas.dispatchEvent(mouseEvent);
 			}, false);
 			freshCanvas.addEventListener("touchend", function (e) {
-				var touchEvent = new touchEvent("mouseup", {});
-				freshCanvas.dispatchEvent(touchEvent);
+				var mouseEvent = new MouseEvent("mouseup", {});
+				freshCanvas.dispatchEvent(mouseEvent);
 			}, false);
 
 freshCanvas.addEventListener("touchmove", function (e) {
 				var touch = e.touches[0];
-				var touchEvent = new touchEvent("mousemove", {
+				var mouseEvent = new MouseEvent("mousemove", {
 					clientX: touch.clientX,
 					clientY: touch.clientY
 				});
-				freshCanvas.dispatchEvent(touchEvent);
+				freshCanvas.dispatchEvent(mouseEvent);
 			}, false);
 
 	// Prevent the whole page from dragging on mobile
