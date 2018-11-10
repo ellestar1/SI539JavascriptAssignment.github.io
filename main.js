@@ -84,29 +84,29 @@ window.addEventListener('keydown', functionKeys);
 // define touch point variable on ye x and ye y.
 var touchPosition = { x:0, y:0 };
 
-//set up event listeners for touch.
+//set up event listeners for touch. I know the mouse is off now, i don't know why that changed. but it works.
 freshCanvas.addEventListener("touchstart", function (e) {
 				touchPosition = getTouchPosition(freshCanvas, e);
 				var touch = e.touches[0];
-				var mouseEvent = new MouseEvent("mousedown", {
+				var touchEvent = new touchEvent("mousedown", {
 					clientX: touch.clientX,
 					clientY: touch.clientY
 				});
 
-freshCanvas.dispatchEvent(mouseEvent);
+freshCanvas.dispatchEvent(touchEvent);
 			}, false);
 			freshCanvas.addEventListener("touchend", function (e) {
-				var mouseEvent = new MouseEvent("mouseup", {});
-				freshCanvas.dispatchEvent(mouseEvent);
+				var touchEvent = new touchEvent("mouseup", {});
+				freshCanvas.dispatchEvent(touchEvent);
 			}, false);
 
 freshCanvas.addEventListener("touchmove", function (e) {
 				var touch = e.touches[0];
-				var mouseEvent = new MouseEvent("mousemove", {
+				var touchEvent = new touchEvent("mousemove", {
 					clientX: touch.clientX,
 					clientY: touch.clientY
 				});
-				freshCanvas.dispatchEvent(mouseEvent);
+				freshCanvas.dispatchEvent(touchEvent);
 			}, false);
 
 	// Prevent the whole page from dragging on mobile
