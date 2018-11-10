@@ -80,31 +80,25 @@ window.addEventListener('keydown', functionKeys);
 // bonus touch event section!
 
 
-// Add touch event actions to canvas element
-	freshCanvas.addEventListener("touchstart", touchStart, false);
-	freshCanvas.addEventListener("touchmove", touchDown, false);
-	freshCanvas.addEventListener("touchend", touchUp, false);
-	//freshCanvas.addEventListener("touchcancel", cancel, false);
+//define new variables for touch
+var touches;
+/* Remember the order of the touch events */ 
+var drawPath = new Array([]);
+/* Flag for displaying the touching point */
+var isMoved = false;
 
 //define functions
 	function touchStart(e) 
 {
    touches = e.touches.item(0);
-    
-   log.innerHTML ='<strong>pageX:</strong> ' + touches.pageX + 
+    console.log.innerHTML ='<strong>pageX:</strong> ' + touches.pageX + 
                   '<br><strong>pageY:</strong> ' + touches.pageY;
-    
-   context.fillStyle = "#f00";
+    context.fillStyle = "#f00";
     
    /* For accurate coordinates, calculate minus offset(Left) from page(X) */
    context.fillRect(touches.pageX - this.offsetLeft, 
                     touches.pageY - this.offsetTop, 5, 5);
 }
-var touches;
-/* Remember the order of the touch events */ 
-var drawPath = new Array();
-/* Flag for displaying the touching point */
-var isMoved = false;
     
 function touchUp(e) 
 {
@@ -118,10 +112,9 @@ function touchDown(e)
    isMoved = true;
    touches = e.changedTouches;
     
-   /* Assign the line style to be drawn */ 
-   context.lineWidth = strokeWidth;
-   context.strokeStyle = strokeColor;
-   context.lineJoin = "round";
+// Call back line width 
+	context.lineWidth = radius*2;
+    context.lineJoin = "round";
 
    for (var i = 0; i < touches.length; i++) 
    {
@@ -156,3 +149,8 @@ function drawPathSetting(idx)
 
    return -1;
 } 
+// Add touch event actions to canvas element
+	freshCanvas.addEventListener("touchstart", touchStart, false);
+	freshCanvas.addEventListener("touchmove", touchDown, false);
+	freshCanvas.addEventListener("touchend", touchUp, false);
+	//freshCanvas.addEventListener("touchcancel", cancel, false);
