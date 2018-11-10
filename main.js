@@ -79,8 +79,6 @@ window.addEventListener('keydown', functionKeys);
 
 // bonus touch event section!
 
-function context(x,y)
-
 freshCanvas.addEventListener('touchmove', function(e) {
   context(e.touches[0].pageX-e.target.offsetLeft, e.touches[0].pageY-e.target.offsetTop);
 });
