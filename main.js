@@ -16,7 +16,7 @@ var radius = 4;
 var drag = false;
 
 /* create variable for dot brush, set if for the first event, create circle and fill it*/
-var pencilDown = function(e){
+var pencilDraw = function(e){
 	if(drag){
 	//open path for next movement, and make it a stroke.
 		// context.lineTo(e.clientX, e.clientY);
@@ -36,11 +36,11 @@ var pencilDown = function(e){
 //more variables tied to mousing objects.
 var pencilStart = function(e){
 	drag = true;
-	pencilDown(e);
+	pencilDraw(e);
 };
 var pencilUp = function(){
 	drag = false;
-//get rid of extra line in pencilDown.
+//get rid of extra line in pencilDraw.
 	context.beginPath();
 };
 // var cancel = function () {
@@ -49,7 +49,7 @@ var pencilUp = function(){
 
 //actions for the mouse, specifically mouse-related
 	freshCanvas.addEventListener('mousedown', pencilStart);
-	freshCanvas.addEventListener('mousemove', pencilDown);
+	freshCanvas.addEventListener('mousemove', pencilDraw);
 	freshCanvas.addEventListener('mouseup', pencilUp);
 
 
@@ -77,17 +77,20 @@ window.addEventListener('keydown', colorKeys);
 //activate instruction to clear the Canvas or change size of brush)
 window.addEventListener('keydown', functionKeys);
 
-// bonus touch event section!
+// bonus touch event section! While I did talk with several people, 
+// I wanted to do this on my own and not have similar outcomes.
+// resources include the following, which I adapted for my own:
+// https://developer.tizen.org/dev-guide/2.4/org.tizen.tutorials/html/web/w3c/device/task_touch_paint_mw.htm
 
 
 //define new variables for touch
 var touches;
-/* Remember the order of the touch events */ 
+//Remember the order of the touch events // 
 var drawPath = new Array([]);
-/* Flag for displaying the touching point */
+//Flag for displaying the touching point //
 var isMoved = false;
 
-//define functions
+//define functions as with mouse but for touch events
 	function touchStart(e) 
 {
    touches = e.touches.item(0);
@@ -100,14 +103,14 @@ var isMoved = false;
                     touches.pageY - this.offsetTop, 5, 5);
 }
     
-function touchUp(e) 
-{
-   /* Store the current touch information (coordinates) */
-   touches = e.changedTouches;
-   drawPath.push(touches[0]);  
-}
+// function touchUp(e) 
+// {
+//     Store the current touch information (coordinates) 
+//    touches = e.changedTouches;
+//    drawPath.push(touches[0]);  
+// }
 
-function touchDown(e) 
+function touchDraw(e) 
 {
    isMoved = true;
    touches = e.changedTouches;
@@ -136,6 +139,26 @@ function touchDown(e)
    e.preventDefault();
 }
 
+function touchEnd() 
+{
+   /* Display the touching point */
+   if (!isMoved)
+   {
+      var startPoint = (Math.PI/180)*0;
+      var endPoint = (Math.PI/180)*360;
+      context.lineWidth = radius*2;
+      context.lineJoin = "round";
+      context.beginPath();
+      context.arc(touches[0].pageX - this.offsetLeft, touches[0].pageY - this.offsetTop, 
+                  radius/2, startPoint, endPoint, true);
+      context.closePath();
+      context.fill();
+   }
+   isMoved=false;
+   drawPath.length = 0; /* Initialize the stored coordinates */ 
+}
+
+
 function drawPathSetting(idx) 
 {
    for (var i = 0; i < drawPath.length; i++) 
@@ -151,6 +174,6 @@ function drawPathSetting(idx)
 } 
 // Add touch event actions to canvas element
 	freshCanvas.addEventListener("touchstart", touchStart, false);
-	freshCanvas.addEventListener("touchmove", touchDown, false);
-	freshCanvas.addEventListener("touchend", touchUp, false);
+	freshCanvas.addEventListener("touchmove", touchDraw, false);
+	freshCanvas.addEventListener("touchend", touchEnd, false);
 	//freshCanvas.addEventListener("touchcancel", cancel, false);
