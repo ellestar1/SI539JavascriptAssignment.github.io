@@ -1,6 +1,7 @@
 /* create base variables for the Canvas implementation*/
 // Additional credit goes to Emily, for sending me the useful tutorial on YouTube, 
 // Vaidehi and Lauren with whom we banged heads together at different times to come up with solutions
+// jshint.com for details on issues that needed fixing
 // And of course, Colleen and Kangning who reminded me not to panic.
 
 var freshCanvas = document.getElementById('freshCanvas');
@@ -99,10 +100,11 @@ var isMoved = false;
     context.fillStyle = "#f00";
     
    /* For accurate coordinates, calculate minus offset(Left) from page(X) */
-   context.fillRect(touches.pageX - this.offsetLeft, 
+   context.arc(touches.pageX - this.offsetLeft, 
                     touches.pageY - this.offsetTop, 5, 5);
 }
-    
+ 
+ // context.arc(e.clientX, e.clientY, radius, 0, Math.PI*2);   
 // function touchUp(e) 
 // {
 //     Store the current touch information (coordinates) 
