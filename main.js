@@ -31,8 +31,6 @@ var pencilDraw = function(e){
 		context.beginPath();
 		context.moveTo(e.clientX, e.clientY);
 	} 
-	// Prevent the whole page from dragging if on mobile
-		e.preventDefault();
 };
 //more variables tied to mousing objects.
 var pencilStart = function(e){
@@ -44,9 +42,10 @@ var pencilUp = function(){
 //get rid of extra line in pencilDraw.
 	context.beginPath();
 };
+
 // var cancel = function () {
-// 	??? = false;
-// 			};
+//  	context = false;
+// 		};
 
 //actions for the mouse, specifically mouse-related
 	freshCanvas.addEventListener('mousedown', pencilStart);
@@ -80,109 +79,182 @@ window.addEventListener('keydown', functionKeys);
 
 // bonus touch event section! While I did talk with several people, 
 // I wanted to do this on my own and not have similar outcomes.
+// honestly this is cobbled together from sooooo many places.
+
+// define touch point variable on ye x and ye y.
+var touchPosition = { x:0, y:0 };
+
+//set up event listeners for touch.
+freshCanvas.addEventListener("touchstart", function (e) {
+				touchPosition = getTouchPosition(freshCanvas, e);
+				var touch = e.touches[0];
+				var mouseEvent = new MouseEvent("mousedown", {
+					clientX: touch.clientX,
+					clientY: touch.clientY
+				});
+
+freshCanvas.dispatchEvent(mouseEvent);
+			}, false);
+			freshCanvas.addEventListener("touchend", function (e) {
+				var mouseEvent = new MouseEvent("mouseup", {});
+				freshCanvas.dispatchEvent(mouseEvent);
+			}, false);
+
+freshCanvas.addEventListener("touchmove", function (e) {
+				var touch = e.touches[0];
+				var mouseEvent = new MouseEvent("mousemove", {
+					clientX: touch.clientX,
+					clientY: touch.clientY
+				});
+				freshCanvas.dispatchEvent(mouseEvent);
+			}, false);
+
+	// Prevent the whole page from dragging on mobile
+			function preventDrag(e) {
+   			e.preventDefault(); 
+}
+	//call it
+			document.addEventListener("touchmove", preventDrag, {passive: false});
+
+
+	// Get touch position relative to canvas
+			function getTouchPosition(canvasDom, touchEvent) {
+				var rect = canvasDom.getBoundingClientRect();
+				return {
+					x: touchEvent.touches[0].clientX - rect.left,
+					y: touchEvent.touches[0].clientY - rect.top
+				};
+			}
+
+
+// here is a bunch of stuff that "ALMOST worked" but didn't.
+// its included here so I can ask Colleen and Kangning about it later
+// var draw = function(e){
+//   console.log(e.keyCode);
+//   context.beginPath();
+//   context.fillStyle = '000000';
+//   context.arc(e.clientX, e.clientY,30, 0, Math.PI*2);
+//   context.fill();
+//   context.closePath();
+// };
+
+// freshCanvas.addEventListener('touchstart', function(e){
+//   draw(e.changedTouches[0].pageX, e.changedTouches[0].pageY);
+//   draw(e.changedTouches[1].pageX, e.changedTouches[1].pageY);
+// });
+
+// freshCanvas.addEventListener('touchmove', function(e){
+//   e.preventDefault();
+//   draw(e.changedTouches[0].pageX, e.changedTouches[0].pageY);
+//   draw(e.changedTouches[1].pageX, e.changedTouches[1].pageY);
+// });
+
+// freshCanvas.addEventListener("touchend", touchEnd, false);
+
 // resources include the following, which I adapted for my own:
 // https://developer.tizen.org/dev-guide/2.4/org.tizen.tutorials/html/web/w3c/device/task_touch_paint_mw.htm
+// this KINDA works, but I couldn't figure out the drag, or the problems I had with the cursors.
 
+// //define new variables for touch
+// var touches;
+// //Remember the order of the touch events // 
+// var drawPath = new Array([]);
+// //Flag for displaying the touching point //
+// var isMoved = false;
 
-//define new variables for touch
-var touches;
-//Remember the order of the touch events // 
-var drawPath = new Array([]);
-//Flag for displaying the touching point //
-var isMoved = false;
-
-//define functions as with mouse but for touch events
-	function touchStart(e) 
-{
-   touches = e.touches.item(0);
-    console.log.innerHTML ='<strong>pageX:</strong> ' + touches.pageX + 
-                  '<br><strong>pageY:</strong> ' + touches.pageY;
-    context.fillStyle = "#f00";
+// //define functions as with mouse but for touch events
+// 	function touchStart(e) 
+// {
+//    touches = e.touches.item(0);
+//     console.log.innerHTML ='<strong>pageX:</strong> ' + touches.pageX + 
+//                   '<br><strong>pageY:</strong> ' + touches.pageY;
+//     context.fillStyle = "#f00";
     
-   /* For accurate coordinates, calculate minus offset(Left) from page(X) */
-   context.arc(touches.pageX - this.offsetLeft, 
-                    touches.pageY - this.offsetTop, 5, 5);
+//    /* For accurate coordinates, calculate minus offset(Left) from page(X) */
+//    context.arc(touches.pageX - this.offsetLeft, 
+//                     touches.pageY - this.offsetTop, 5, 5, Math.PI*2);
  
-if(drag){
-	//open path for next movement, and make it a stroke.
-		// context.lineTo(e.clientX, e.clientY);
-		// context.stroke();
-	// make sure to check against the drag, baby, yeah.
-		context.beginPath();
-		context.arc(e.clientX, e.clientY, radius, 0, Math.PI*2);
-	// context.arc(e.offsetX, e.offsetY, radius, 0, Math.PI*2);
-		context.fill();
-	// tell it to connect to prior mousepoint and move to current location of cursor
-		context.beginPath();
-		context.moveTo(e.clientX, e.clientY);
-	} 
-	// Prevent the whole page from dragging if on mobile
-		e.preventDefault();
-}
-function drawPathSetting(idx) 
-{
-   for (var i = 0; i < drawPath.length; i++) 
-   {
-      var _idx = drawPath[i].identifier;
-      if (_idx === idx) 
-      {
-         return i;
-      }
-   }
+// if(drag){
+// 	//open path for next movement, and make it a stroke.
+// 		// context.lineTo(e.clientX, e.clientY);
+// 		// context.stroke();
+// 	// make sure to check against the drag, baby, yeah.
+// 		context.beginPath();
+// 		context.arc(e.clientX, e.clientY, radius, 0, Math.PI*2);
+// 	// context.arc(e.offsetX, e.offsetY, radius, 0, Math.PI*2);
+// 		context.fill();
+// 	// tell it to connect to prior mousepoint and move to current location of cursor
+// 		context.beginPath();
+// 		context.moveTo(e.clientX, e.clientY);
+// 	} 
+// 	// Prevent the whole page from dragging if on mobile
+// 		e.preventDefault();
+// }
 
-   return -1;
-} 
+// function drawPathSetting(idx) 
+// {
+//    for (var i = 0; i < drawPath.length; i++) 
+//    {
+//       var _idx = drawPath[i].identifier;
+//       if (_idx === idx) 
+//       {
+//          return i;
+//       }
+//    }
 
-function touchDraw(e) 
-{
-   isMoved = true;
-   touches = e.changedTouches;
+//    return -1;
+// } 
+
+// function touchDraw(e) 
+// {
+//    isMoved = true;
+//    touches = e.changedTouches;
     
-// Call back line width 
-	context.lineWidth = radius*2;
-    context.lineJoin = "round";
+// // Call back line width 
+// 	context.lineWidth = radius*2;
+//     context.lineJoin = "round";
 
-   for (var i = 0; i < touches.length; i++) 
-   {
-      var idx = drawPathSetting(touches[i].identifier);
+//    for (var i = 0; i < touches.length; i++) 
+//    {
+//       var idx = drawPathSetting(touches[i].identifier);
     
-      /* Draw a line from the stored coordinates to the current coordinates */
-      context.beginPath();
-      context.moveTo(drawPath[idx].pageX - this.offsetLeft, 
-                     drawPath[idx].pageY - this.offsetTop);
-      context.lineTo(touches[i].pageX - this.offsetLeft, 
-                     touches[i].pageY - this.offsetTop);
+//       /* Draw a line from the stored coordinates to the current coordinates */
+//       context.beginPath();
+//       context.moveTo(drawPath[idx].pageX - this.offsetLeft, 
+//                      drawPath[idx].pageY - this.offsetTop);
+//       context.lineTo(touches[i].pageX - this.offsetLeft, 
+//                      touches[i].pageY - this.offsetTop);
 
-      context.closePath();
-      context.stroke();
+//       context.closePath();
+//       context.stroke();
 
-      /* Delete the stored coordinates and store the current ones */    
-      drawPath.splice(idx, 1, touches[i]); 
-   }
-   e.preventDefault();
-}
+//       /* Delete the stored coordinates and store the current ones */    
+//       drawPath.splice(idx, 1, touches[i]); 
+//    }
+//    e.preventDefault();
+// }
 
-function touchEnd() 
-{
-   /* Display the touching point */
-   if (!isMoved)
-   {
-      var startPoint = (Math.PI/180)*0;
-      var endPoint = (Math.PI/180)*360;
-      context.lineWidth = radius*2;
-      context.lineJoin = "round";
-      context.beginPath();
-      context.arc(touches[0].pageX - this.offsetLeft, touches[0].pageY - this.offsetTop, 
-                  radius/2, startPoint, endPoint, true);
-      context.closePath();
-      context.fill();
-   }
-   isMoved=false;
-   drawPath.length = 0; /* Initialize the stored coordinates */ 
-}
+// function touchEnd() 
+// {
+//    /* Display the touching point */
+//    if (!isMoved)
+//    {
+//       var startPoint = (Math.PI/180)*0;
+//       var endPoint = (Math.PI/180)*360;
+//       context.lineWidth = radius*2;
+//       context.lineJoin = "round";
+//       context.beginPath();
+//       context.arc(touches[0].pageX - this.offsetLeft, touches[0].pageY - this.offsetTop, 
+//                   radius/2, startPoint, endPoint, true);
+//       context.closePath();
+//       context.fill();
+//    }
+//    isMoved=false;
+//    drawPath.length = 0; /* Initialize the stored coordinates */ 
+// }
 
-// Add touch event actions to canvas element
-	freshCanvas.addEventListener("touchstart", touchStart, false);
-	freshCanvas.addEventListener("touchmove", touchDraw, false);
-	freshCanvas.addEventListener("touchend", touchEnd, false);
-	//freshCanvas.addEventListener("touchcancel", cancel, false);
+// // Add touch event actions to canvas element
+// 	freshCanvas.addEventListener("touchstart", touchStart, false);
+// 	freshCanvas.addEventListener("touchmove", touchDraw, false);
+// 	freshCanvas.addEventListener("touchend", touchEnd, false);
+// 	// freshCanvas.addEventListener("touchcancel", cancel, false);
