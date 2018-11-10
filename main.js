@@ -102,16 +102,23 @@ var isMoved = false;
    /* For accurate coordinates, calculate minus offset(Left) from page(X) */
    context.arc(touches.pageX - this.offsetLeft, 
                     touches.pageY - this.offsetTop, 5, 5);
-}
  
- // context.arc(e.clientX, e.clientY, radius, 0, Math.PI*2);   
-// function touchUp(e) 
-// {
-//     Store the current touch information (coordinates) 
-//    touches = e.changedTouches;
-//    drawPath.push(touches[0]);  
-// }
-
+if(drag){
+	//open path for next movement, and make it a stroke.
+		// context.lineTo(e.clientX, e.clientY);
+		// context.stroke();
+	// make sure to check against the drag, baby, yeah.
+		context.beginPath();
+		context.arc(e.clientX, e.clientY, radius, 0, Math.PI*2);
+	// context.arc(e.offsetX, e.offsetY, radius, 0, Math.PI*2);
+		context.fill();
+	// tell it to connect to prior mousepoint and move to current location of cursor
+		context.beginPath();
+		context.moveTo(e.clientX, e.clientY);
+	} 
+	// Prevent the whole page from dragging if on mobile
+		e.preventDefault();
+}
 function drawPathSetting(idx) 
 {
    for (var i = 0; i < drawPath.length; i++) 
